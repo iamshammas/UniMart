@@ -4,10 +4,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL,related_name='profile',null=True)
-    address = models.TextField(blank=True)
-    phone = models.IntegerField(blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
+    address = models.TextField(blank=True,null=True)
+    phone = models.CharField(max_length=20,blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user__username
+        resp = self.user.username
+        return resp.upper()
