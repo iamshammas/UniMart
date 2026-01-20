@@ -18,10 +18,14 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from Authentication.views import redirecter
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('Authentication.urls')),
+    path('',redirecter,name='redirecter' ),
+    path('auth/',include('Authentication.urls')),
+    path('dashboard/',include('Product.urls'),name='dashboard'),
+    path('cart/',include('Cart.urls'),name='cart'),
 ]
 
 

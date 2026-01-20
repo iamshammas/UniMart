@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+
+<h2>Products</h2>
+
+<!-- Category Filter -->
+<div>
+    <strong>Categories:</strong>
+    <a href="{% url 'dashboard'  %}">All</a>
+    {% for category in categories %}
+        |
+        <a href="{% url 'category_products' category.slug %}">
+            {{ category.name }}
+        </a>
+    {% endfor %}
+</div>
+
+<hr>
+
+<!-- Product List -->
+<div>
+    {% if products %}
+        {% for product in products %}
+            <div style="border:1px solid #ddd; padding:10px; margin-bottom:10px;">
+                
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" width="150">
+                {% endif %}
+
+                <h3>
+                    <a href="{% url 'product_detail' product.slug %}">
+                        {{ product.name }}
+                    </a>
+                </h3>
+
+                <p>₹ {{ product.price }}</p>
+
+                {% if product.stock > 0 %}
+                    <form method="post" action="{% url 'add_to_cart' product.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                {% else %}
+                    <p><strong>Out of stock</strong></p>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No products available.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

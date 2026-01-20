@@ -11,6 +11,8 @@ def home(request):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     form = UserRegisterForm()
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -22,13 +24,15 @@ def register(request):
     return render(request,'authentication/register.html',{'form':form})
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     if request.method == 'POST':
         form = AuthenticationForm(request,data=request.POST)
         if form.is_valid():
             user = form.get_user()
             print(user)
             authlogin(request,user)
-            return redirect('home')
+            return redirect('dashboard')
     else:
         form = AuthenticationForm()
     return render(request,'authentication/login.html',{'form':form})
@@ -36,3 +40,11 @@ def login(request):
 def logout(request):
     authlogout(request)
     return redirect('register')
+
+def profile(request):
+    return render(request,'authentication/profile.html')
+
+def redirecter(request):
+    # print(request.user)
+    return redirect('dashboard')
+    # return HttpResponse('HOME PAGE')
