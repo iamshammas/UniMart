@@ -11,11 +11,12 @@ class Cart(models.Model):
 
     @property
     def total_amount(self):
-        less = [x.total for x in self.cartitem_set.all()]
-        print(less)
-        print('HELOOOOOOOOOO')
-        return sum(x.total for x in self.cartitem_set.all())
+        return sum(x.total for x in self.items.all())
 
+    # @property
+    # def test(self):
+    #     return 1
+    
     def __str__(self):
         return self.user.username
 

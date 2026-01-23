@@ -26,6 +26,7 @@ urlpatterns = [
     path('auth/',include('Authentication.urls')),
     path('dashboard/',include('Product.urls'),name='dashboard'),
     path('cart/',include('Cart.urls'),name='cart'),
+    # path('checkout/',include('Payment')),
 ]
 
 

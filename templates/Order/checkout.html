@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+<h2>Checkout</h2>
+
+{% if cart_items %}
+
+    <h3>Total: ₹ {{ cart_tot }}</h3>
+    <!-- <h3>Order Summary</h3> -->
+    <!-- <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹ {{ item.product.price }}</td>
+            <td>₹ {{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </table> -->
+
+    <br>
+    <!-- <h3>Total: ₹ {{ total_amount }}</h3> -->
+
+    <hr>
+
+    <h3>Shipping Details</h3>
+    <form method="post" >
+        {% csrf_token %}
+
+        <div>
+            <label>Name</label><br>
+            <input type="text" name="name" value="{{ cart.user.username }}" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label>Phone</label><br>
+            <input type="text" name="phone" value="{{ cart.user.profile.phone }}" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label>Address</label><br>
+            <textarea name="address" rows="3" required>{{ cart.user.profile.address }}</textarea>
+        </div>
+
+        <br>
+
+        <h3>Payment Method</h3>
+        <label>
+            <input type="radio" name="payment_method" value="COD" checked>
+            Cash on Delivery
+        </label>
+
+        <br><br>
+        <button type="submit">Place Order</button>
+    </form>
+
+{% else %}
+    <p>Your cart is empty.</p>
+    <a href="/">Continue shopping</a>
+{% endif %}
+
+{% endblock %}

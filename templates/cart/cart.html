@@ -49,9 +49,9 @@
 
     <br>
 
-    <h3>Total: ₹ {{ cart_items.total_amount }}</h3>
+    <h3>Total: ₹ {{ cart.total_amount }}</h3>
 
-    <a href="/checkout/">Proceed to Checkout</a>
+    <a href="{% url 'checkout' %}">Proceed to Checkout</a>
 
 {% else %}
     <p>Your cart is empty.</p>
