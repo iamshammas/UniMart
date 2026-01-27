@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from Cart.models import Cart
 from .models import Order, OrderItem
+from Authentication.models import Profile
 # Create your views here.
 
 
@@ -13,6 +14,11 @@ def checkout(request):
         address = request.POST.get('address')
         payment_method = request.POST.get('payment_method')
         total_amount = Cart.objects.get(id=request.user.id).total_amount
+        profile = Profile.objects.get(user=request.user)
+        profile.name = name
+        profile.phone = phone
+        profile.address = address
+        profile.save()
         order = Order.objects.create(
             user=user,
             payment_method=payment_method,

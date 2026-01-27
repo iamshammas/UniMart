@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Placed{% endblock %}
+
+{% block content %}
+
+<h2>Order Placed Successfully!</h2>
+
+<p>Thank you for your purchase. Your order has been received and is now being processed.</p>
+
+{% if order %}
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Total Amount:</strong> ₹ {{ order.total_amount }}</p>
+    <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+{% endif %}
+
+<br>
+
+<a href="/">Continue Shopping</a>
+|
+<a href="/orders/">View My Orders</a>
+
+{% endblock %}
