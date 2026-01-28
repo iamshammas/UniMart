@@ -51,7 +51,7 @@ def checkout(request):
     return render(request,'Order/checkout.html',context)
 
 def place_order(request):
-    return HttpResponse('Hello Place order page')
+    return render(request,'Order/place_order.html')
 
 def orders(request):
     return HttpResponse('Hello orders page')

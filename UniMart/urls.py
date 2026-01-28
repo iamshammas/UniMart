@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',redirecter,name='redirecter' ),
     path('auth/',include('Authentication.urls')),
-    path('dashboard/',include('Product.urls'),name='dashboard'),
+    path('dashboard/',include('Product.urls'),name='dash'),
     path('cart/',include('Cart.urls'),name='cart'),
     # path('checkout/',include('Payment')),
 ]

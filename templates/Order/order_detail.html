@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Order {{ order.id }} Details{% endblock %}
+
+{% block content %}
+
+<h2>Order Details</h2>
+
+<p><strong>Order ID:</strong> {{ order.id }}</p>
+<p><strong>User:</strong> {{ order.user.username }}</p>
+<p><strong>Placed On:</strong> {{ order.created_at }}</p>
+<p><strong>Order Status:</strong> {{ order.order_status }}</p>
+<p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+<p><strong>Payment Status:</strong> {{ order.payment_status }}</p>
+<p><strong>Total Amount:</strong> ₹ {{ order.total_amount }}</p>
+
+<hr>
+
+<h3>Items</h3>
+<table border="1" cellpadding="10" cellspacing="0" width="100%">
+    <tr>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+    </tr>
+
+    {% for item in order_items %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>₹ {{ item.price }}</td>
+        <td>₹ {{ item.total }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<a href="{% url 'profile' %}">Back to Orders</a>
+
+{% endblock %}
