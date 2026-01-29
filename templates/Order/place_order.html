@@ -4,20 +4,26 @@
 
 {% block content %}
 
-<h2>Order Placed Successfully!</h2>
+<div class="container text-center">
 
-<p>Thank you for your purchase. Your order has been received and is now being processed.</p>
+    <div class="alert alert-success mt-4 py-4 shadow-sm">
+        <h3 class="mb-3">🎉 Order Placed Successfully!</h3>
+        <p class="mb-0">Thank you for your purchase! Your order is now being processed.</p>
+    </div>
 
-{% if order %}
-    <p><strong>Order ID:</strong> {{ order.id }}</p>
-    <p><strong>Total Amount:</strong> ₹ {{ order.total_amount }}</p>
-    <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
-{% endif %}
+    {% if order %}
+    <div class="card shadow-sm p-4 mb-4 mx-auto" style="max-width: 400px;">
+        <p><strong>Order ID:</strong> #{{ order.id }}</p>
+        <p><strong>Total Amount:</strong> ₹ {{ order.total_amount }}</p>
+        <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+    </div>
+    {% endif %}
 
-<br>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="/" class="btn btn-primary">Continue Shopping</a>
+        <a href="{% url 'profile' %}" class="btn btn-outline-secondary">View My Orders</a>
+    </div>
 
-<a href="/">Continue Shopping</a>
-|
-<a href="{% url 'profile' %}">View My Orders</a>
+</div>
 
 {% endblock %}

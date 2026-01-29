@@ -4,58 +4,83 @@
 
 {% block content %}
 
-<h2>My Cart</h2>
+<div class="container">
 
-{% if cart_items %}
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-            <th>Action</th>
-        </tr>
+    <h2 class="mb-4">My Cart</h2>
 
-        {% for item in cart_items %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td>₹ {{ item.product.price }}</td>
+    {% if cart_items %}
+    
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th style="width: 200px;">Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-                <td>
-                    <form method="post" action="{% url 'update_cart' item.id %}">
-                        {% csrf_token %}
-                        <input
-                            type="number"
-                            name="quantity"
-                            value="{{ item.quantity }}"
-                            min="1"
-                            max="{{ item.product.stock }}"
-                        >
-                        <button type="submit">Update</button>
-                    </form>
-                </td>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td class="text-start">{{ item.product.name }}</td>
 
-                <td>₹ {{item.total}}</td>
+                        <td>₹ {{ item.product.price }}</td>
 
-                <td>
-                    <form method="post" action="{% url 'remove_from_cart' item.id %}">
-                        {% csrf_token %}
-                        <button type="submit">Remove</button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+                        <td>
+                            <form method="post" action="{% url 'update_cart' item.id %}" class="d-flex justify-content-center">
+                                {% csrf_token %}
+                                <input
+                                    type="number"
+                                    name="quantity"
+                                    value="{{ item.quantity }}"
+                                    min="1"
+                                    max="{{ item.product.stock }}"
+                                    class="form-control form-control-sm me-2"
+                                    style="width: 70px;"
+                                >
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    Update
+                                </button>
+                            </form>
+                        </td>
 
-    <br>
+                        <td>₹ {{ item.total }}</td>
 
-    <h3>Total: ₹ {{ cart.total_amount }}</h3>
+                        <td>
+                            <form method="post" action="{% url 'remove_from_cart' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    Remove
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
 
-    <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+            </table>
+        </div>
 
-{% else %}
-    <p>Your cart is empty.</p>
-    <a href="/">Continue shopping</a>
-{% endif %}
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <h4 class="mb-0">Total: ₹ {{ cart.total_amount }}</h4>
+            <a href="{% url 'checkout' %}" class="btn btn-success btn-lg">
+                Proceed to Checkout
+            </a>
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-info mt-4">
+            Your cart is empty.
+        </div>
+        <a href="/" class="btn btn-primary">
+            Continue Shopping
+        </a>
+
+    {% endif %}
+</div>
 
 {% endblock %}

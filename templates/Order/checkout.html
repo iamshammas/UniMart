@@ -4,72 +4,91 @@
 
 {% block content %}
 
-<h2>Checkout</h2>
+<div class="container">
 
-{% if cart_items %}
+    <h2 class="mb-4">Checkout</h2>
 
-    <h3>Total: ₹ {{ cart_tot }}</h3>
-    <!-- <h3>Order Summary</h3> -->
-    <!-- <table border="1" cellpadding="10" cellspacing="0" width="100%">
-        <tr>
-            <th>Product</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Subtotal</th>
-        </tr>
-        {% for item in cart_items %}
-        <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>₹ {{ item.product.price }}</td>
-            <td>₹ {{ item.subtotal }}</td>
-        </tr>
-        {% endfor %}
-    </table> -->
+    {% if cart_items %}
 
-    <br>
-    <!-- <h3>Total: ₹ {{ total_amount }}</h3> -->
-
-    <hr>
-
-    <h3>Shipping Details</h3>
-    <form method="post" >
-        {% csrf_token %}
-
-        <div>
-            <label>Name</label><br>
-            <input type="text" name="name" value="{{ cart.user.username }}" required>
+        <div class="alert alert-info">
+            <strong>Total Payable:</strong> ₹ {{ cart_tot }}
         </div>
 
-        <br>
+        <hr>
 
-        <div>
-            <label>Phone</label><br>
-            <input type="text" name="phone" value="{{ cart.user.profile.phone }}" required>
+        <h4 class="mb-3">Shipping Details</h4>
+
+        <form method="post" class="card p-4 shadow-sm">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input 
+                    type="text" 
+                    name="name" 
+                    value="{{ cart.user.username }}" 
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input 
+                    type="text" 
+                    name="phone" 
+                    value="{{ cart.user.profile.phone }}" 
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea 
+                    name="address" 
+                    rows="3" 
+                    class="form-control"
+                    required
+                >{{ cart.user.profile.address }}</textarea>
+            </div>
+
+            <hr>
+
+            <h4 class="mb-3">Payment Method</h4>
+
+            <div class="form-check">
+                <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="payment_method" 
+                    value="COD" 
+                    id="cod"
+                    checked
+                >
+                <label class="form-check-label" for="cod">
+                    Cash on Delivery
+                </label>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-success btn-lg">
+                    Place Order
+                </button>
+            </div>
+
+        </form>
+
+    {% else %}
+
+        <div class="alert alert-warning mt-4">
+            Your cart is empty.
         </div>
 
-        <br>
+        <a href="/" class="btn btn-primary">Continue Shopping</a>
 
-        <div>
-            <label>Address</label><br>
-            <textarea name="address" rows="3" required>{{ cart.user.profile.address }}</textarea>
-        </div>
+    {% endif %}
 
-        <br>
-
-        <h3>Payment Method</h3>
-        <label>
-            <input type="radio" name="payment_method" value="COD" checked>
-            Cash on Delivery
-        </label>
-
-        <br><br>
-        <button type="submit">Place Order</button>
-    </form>
-
-{% else %}
-    <p>Your cart is empty.</p>
-    <a href="/">Continue shopping</a>
-{% endif %}
+</div>
 
 {% endblock %}
